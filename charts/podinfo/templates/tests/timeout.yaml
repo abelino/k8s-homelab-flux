@@ -1,7 +1,8 @@
+{{- if .Values.faults.testTimeout }}
 apiVersion: v1
 kind: Pod
 metadata:
-  name: {{ template "podinfo.fullname" . }}-grpc-test-{{ randAlphaNum 5 | lower }}
+  name: {{ template "podinfo.fullname" . }}-fault-test-{{ randAlphaNum 5 | lower }}
   labels:
     {{- include "podinfo.labels" . | nindent 4 }}
   annotations:
@@ -12,8 +13,9 @@ metadata:
     appmesh.k8s.aws/sidecarInjectorWebhook: disabled
 spec:
   containers:
-    - name: grpc-health-probe
-      image: stefanprodan/grpc_health_probe:v0.3.0
-      command: ['grpc_health_probe']
-      args:  ['-addr={{ template "podinfo.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.grpcPort }}']
+    - name: fault
+      image: alpine:3.11
+      command: ['/bin/sh']
+      args:  ['-c', 'while sleep 3600; do :; done']
   restartPolicy: Never
+{{- end }}

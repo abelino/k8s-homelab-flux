@@ -6,7 +6,7 @@ metadata:
   namespace: lab
   annotations:
     fluxcd.io/automated: "true"
-    filter.fluxcd.io/chart-image: semver:~0.4
+    filter.fluxcd.io/chart-image: semver:~5.0
 spec:
   releaseName: podinfo-lab
   chart:
@@ -16,5 +16,5 @@ spec:
   values:
     image:
       repository: stefanprodan/podinfo
-      tag: 0.4.11
+      tag: 5.0.1
     replicaCount: 3
