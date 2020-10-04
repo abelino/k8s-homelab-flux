@@ -1,0 +1,27 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nginx-ingress
+  namespace: lab
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: semver:~3.4
+spec:
+  releaseName: nginx-ingress
+  targetNamespace: lab
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com
+    version: 3.4.0
+    name: nginx-ingress
+  values:
+    controller:
+      publishService:
+        enabled: true
+      kind: "DaemonSet"
+      service:
+        enabled: true
+        externalTrafficPolicy: Local
+    defaultBackend:
+      replicaCount: 2
+    podSecurityPolicy:
+      enabled: true
