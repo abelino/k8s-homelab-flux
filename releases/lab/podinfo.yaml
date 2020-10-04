@@ -13,6 +13,19 @@ spec:
     git: git@github.com:abelino/k8s-homelab-flux
     path: charts/podinfo
     ref: master
+  ports:
+    - name: metrics
+      port: 9797
+      targetPort: 9797
+      protocol: TCP
+    - name: http
+      port: 9898
+      targetPort: 9898
+      protocol: TCP
+    - name: grpc
+      port: 9999
+      targetPort: 9999
+      protocol: TCP
   values:
     image:
       repository: stefanprodan/podinfo
