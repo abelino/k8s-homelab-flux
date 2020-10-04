@@ -17,10 +17,6 @@ spec:
     controller:
       publishService:
         enabled: true
-      kind: "DaemonSet"
-      service:
-        enabled: true
-        externalTrafficPolicy: Local
     defaultBackend:
       replicaCount: 2
     podSecurityPolicy:
