@@ -2,13 +2,13 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: podinfo-prod
-  namespace: prod
+  name: podinfo-lab
+  namespace: lab
   annotations:
     fluxcd.io/automated: "true"
     filter.fluxcd.io/chart-image: semver:~0.4
 spec:
-  releaseName: podinfo-prod
+  releaseName: podinfo-lab
   chart:
     git: git@github.com:abelino/k8s-homelab-flux
     path: charts/podinfo
