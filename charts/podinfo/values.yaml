@@ -76,8 +76,8 @@ ingress:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   path: /*
-  hosts:
-    - podinfo.local
+  # hosts:
+  #   - podinfo.local
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
