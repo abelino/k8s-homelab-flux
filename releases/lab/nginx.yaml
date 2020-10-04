@@ -5,13 +5,13 @@ metadata:
   namespace: lab
   annotations:
     fluxcd.io/automated: "true"
-    filter.fluxcd.io/chart-image: semver:~3.4
+    filter.fluxcd.io/chart-image: semver:~1.24
 spec:
   releaseName: nginx-ingress
   targetNamespace: lab
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com
-    version: 3.4.0
+    version: 1.24.4
     name: nginx-ingress
   values:
     controller:
