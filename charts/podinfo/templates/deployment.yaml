@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "podinfo.fullname" . }}
   labels:
-    app: {{ template "podinfo.name" . }}
-    chart: {{ template "podinfo.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "podinfo.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.hpa.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -17,16 +14,17 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      app: {{ template "podinfo.name" . }}
-      release: {{ .Release.Name }}
+      {{- include "podinfo.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ template "podinfo.name" . }}
-        release: {{ .Release.Name }}
+        {{- include "podinfo.selectorLabels" . | nindent 8 }}
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "{{ .Values.service.httpPort }}"
+        {{- range $key, $value := .Values.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
     spec:
       terminationGracePeriodSeconds: 30
       {{- if .Values.serviceAccount.enabled }}
@@ -51,16 +49,27 @@ spec:
             {{- range .Values.backends }}
             - --backend-url={{ . }}
             {{- end }}
+            {{- if .Values.cache }}
+            - --cache-server={{ .Values.cache }}
+            {{- else if .Values.redis.enabled }}
+            - --cache-server={{ template "podinfo.fullname" . }}:6379
+            {{- end }}
             - --level={{ .Values.logLevel }}
             - --random-delay={{ .Values.faults.delay }}
             - --random-error={{ .Values.faults.error }}
+            {{- if .Values.faults.unhealthy }}
+            - --unhealthy
+            {{- end }}
+            {{- if .Values.faults.unready }}
+            - --unready
+            {{- end }}
             {{- if .Values.h2c.enabled }}
             - --h2c
             {{- end }}
           env:
           {{- if .Values.ui.message }}
           - name: PODINFO_UI_MESSAGE
-            value: {{ .Values.ui.message }}
+            value: {{ quote .Values.ui.message }}
           {{- end }}
           {{- if .Values.ui.logo }}
           - name: PODINFO_UI_LOGO
@@ -68,7 +77,7 @@ spec:
           {{- end }}
           {{- if .Values.ui.color }}
           - name: PODINFO_UI_COLOR
-            value: {{ .Values.ui.color }}
+            value: {{ quote .Values.ui.color }}
           {{- end }}
           {{- if .Values.backend }}
           - name: PODINFO_BACKEND_URL
