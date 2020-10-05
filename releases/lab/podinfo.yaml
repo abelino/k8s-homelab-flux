@@ -9,6 +9,7 @@ metadata:
     filter.fluxcd.io/chart-image: semver:~5.0
 spec:
   releaseName: podinfo
+  forceUpgrade: true
   chart:
     git: git@github.com:abelino/k8s-homelab-flux
     path: charts/podinfo
