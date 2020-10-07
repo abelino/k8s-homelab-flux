@@ -9,7 +9,6 @@ metadata:
     filter.fluxcd.io/chart-image: semver:~5.0
 spec:
   releaseName: podinfo
-  forceUpgrade: true
   chart:
     git: git@github.com:abelino/k8s-homelab-flux
     path: charts/podinfo
@@ -18,4 +17,12 @@ spec:
     image:
       repository: stefanprodan/podinfo
       tag: 5.0.2
+    ingress:
+      enabled: false
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.frontend.rule.type: PathPrefix
+      hosts:
+        - podinfo.alpha.local
+      path: /
     replicaCount: 3
