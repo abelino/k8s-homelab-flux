@@ -18,11 +18,7 @@ spec:
       repository: stefanprodan/podinfo
       tag: 5.0.2
     ingress:
-      enabled: false
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.frontend.rule.type: PathPrefix
+      enabled: true
       hosts:
-        - podinfo.alpha.local
-      path: /
+        - podinfo.{ip:.*}.nip.io
     replicaCount: 3
