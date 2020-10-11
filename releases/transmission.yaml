@@ -1,0 +1,50 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: transmission
+  namespace: transmission-test
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: semver:~3.00
+spec:
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com
+    version: 1.24.4
+    name: nginx-ingress
+  values:
+    image:
+      repository: linuxserver/transmission
+      tag: 3.00-r0-ls66
+    controller:
+      publishService:
+        enabled: true
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities:
+        add:
+        - NET_ADMIN
+      privileged: true
+    process:
+      uid: "1000"
+      gid: "1000"
+    ingress:
+      enabled: true
+      hosts:
+        - host: transmission.{ip:.*}.nip.io
+          path: /
+    persistence:
+      config:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: local-storage
+        labels:
+          type: local
+      downloads:
+        enabled: true
+        accessMode: ReadWriteOnce
+        size: 1Ti
+        storageClass: local-storage
+        labels:
+          type: local
