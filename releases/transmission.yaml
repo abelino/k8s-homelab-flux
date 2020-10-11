@@ -3,15 +3,15 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: transmission
-  namespace: transmission-test
+  namespace: transmission
   annotations:
     fluxcd.io/automated: "true"
     filter.fluxcd.io/chart-image: semver:~3.00
 spec:
   chart:
-    repository: https://kubernetes-charts.storage.googleapis.com
-    version: 1.24.4
-    name: nginx-ingress
+    git: git@github.com:abelino/k8s-homelab-flux
+    path: charts/transmission
+    ref: master
   values:
     image:
       repository: linuxserver/transmission
