@@ -8,6 +8,7 @@ metadata:
     fluxcd.io/automated: "true"
     filter.fluxcd.io/chart-image: semver:~3.00
 spec:
+  releaseName: transmission
   chart:
     git: git@github.com:abelino/k8s-homelab-flux
     path: charts/transmission
