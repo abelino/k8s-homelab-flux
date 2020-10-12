@@ -53,6 +53,94 @@ service:
       tcp: 51413
       udp: 51413
 
+settings:
+  altSpeed:
+    enabled: false
+    down: 50
+    up: 50
+    time:
+      enabled: false
+      day: 127
+      begin: 540
+      end: 1020
+  bindAddress:
+    ipv4: 0.0.0.0
+    ipv6: "::"
+  blocklist:
+    enabled: false
+    url: http://www.example.com/blocklist
+  cacheSize: 4
+  dhtEnabled: true
+  download:
+    dir: /downloads/complete
+    queue:
+      enabled: true
+      size: 5 # in mb
+  incomplete:
+    enabled: true
+    dir: /downloads/incomplete
+  encryption: 1
+  idleSeeding:
+    enabled: false
+    limit: 30
+  lpdEnabled: false
+  messageLevel: 2
+  peer:
+    congestionAlgorithm: ""
+    idTtl: 6 # in hrs
+    limitGlobal: 200
+    limitPerTorrent: 50
+    port: 51413
+    portRandom:
+      high: 65535
+      low: 49152
+      onStart: false
+    socketTos: default
+  pexEnabled: true
+  portForwardingEnabled: true
+  preallocation: 1
+  prefetchEnabled: true
+  queueStalled:
+    enabled: true
+    minutes: 30
+  ratio:
+    enabled: false
+    limit: 2
+  renamePartialFiles: true
+  rpc:
+    enabled: true
+    authenticationRequired: false
+    bindAddress: 0.0.0.0
+    password: "{1ddd3f1f6a71d655cde7767242a23a575b44c909n5YuRT.f"
+    port: 9091
+    url: /transmission/
+    username: ""
+    whitelist:
+      enabled: false
+      value: 127.0.0.1
+  scrapePausedTorrentsEnabled: true
+  scriptTorrentDone:
+    enabled: false
+    filename: ""
+  seedQueue:
+    enabled: false
+    size: 10
+  speedLimit:
+    down:
+      enabled: false
+      value: 100
+    up:
+      enabled: false
+      value: 100
+  startAddedTorrents: true
+  trashOriginalTorrentFiles: false
+  umask: 2
+  uploadSlotsPerTorrent: 14
+  utpEnabled: false
+  watch:
+    enabled: true
+    dir: watch
+
 ingress:
   enabled: false
   annotations: {}
