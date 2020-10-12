@@ -17,6 +17,10 @@ spec:
     image:
       repository: linuxserver/transmission
       tag: 3.00-r0-ls66
+    resources:
+      limits:
+        cpu: "4"
+        memory: "4Gi"
     settings:
       rpc:
         authenticationRequired: true
