@@ -115,6 +115,9 @@ settings:
     port: 9091
     url: /transmission/
     username: ""
+    hostWhitelist:
+      enabled: true
+      value: ""
     whitelist:
       enabled: false
       value: 127.0.0.1
