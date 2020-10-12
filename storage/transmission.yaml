@@ -8,11 +8,11 @@ metadata:
 spec:
   storageClassName: local-storage
   capacity:
-    storage: 1Ti
+    storage: 100Ti
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/storage/test"
+    path: "/mnt/storage/torrents"
   persistentVolumeReclaimPolicy: Retain
 ---
 apiVersion: v1

@@ -8,6 +8,7 @@ metadata:
     fluxcd.io/automated: "true"
     filter.fluxcd.io/chart-image: semver:~3.00
 spec:
+  releaseName: transmission
   chart:
     git: git@github.com:abelino/k8s-homelab-flux
     path: charts/transmission
@@ -16,6 +17,16 @@ spec:
     image:
       repository: linuxserver/transmission
       tag: 3.00-r0-ls66
+    settings:
+      rpc:
+        authenticationRequired: true
+      download:
+        dir: /downloads
+      incomplete:
+        enabled: false
+      watch:
+        enabled: false
+      umask: 18
     controller:
       publishService:
         enabled: true
@@ -44,7 +55,7 @@ spec:
       downloads:
         enabled: true
         accessMode: ReadWriteOnce
-        size: 1Ti
+        size: 100Ti
         storageClass: local-storage
         labels:
           type: local
