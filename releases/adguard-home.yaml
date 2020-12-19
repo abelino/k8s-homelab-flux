@@ -1,0 +1,24 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: adguard-home
+  namespace: lab
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: semver:~0.104
+spec:
+  releaseName: adguard-home
+  chart:
+    git: git@github.com:abelino/k8s-homelab-flux
+    path: charts/adguard-home
+    ref: master
+  values:
+    image:
+      repository: adguard/adguardhome
+      tag: v0.104.3
+    ingress:
+      enabled: true
+      hosts:
+        - host: adguard.{ip:.*}.nip.io
+          path: /
