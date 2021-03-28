@@ -1,0 +1,45 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: adguard-home
+  namespace: lab
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: semver:~0.105
+  labels:
+    traefik.http.services.adguard-home.loadbalancer.server.port: "3000"
+    traefik.tcp.services.adguard-home-tcp.loadbalancer.server.port: "5353"
+    traefik.udp.services.adguard-home-udp.loadbalancer.server.port: "5353"
+  #   - "traefik.http.routers.adguaed-home.entrypoints: web,websecure"
+  #   - "traefik.http.routers.adguard-home.tls.certresolver: default"
+  #   - "traefik.http.routers.adguard-home.rule: HostRegexp(`adguard.{ip:.*}.nip.io`)"
+spec:
+  releaseName: adguard-home
+  chart:
+    git: https://github.com/k8s-at-home/charts
+    path: charts/stable/adguard-home
+    ref: adguard-home-2.2.3
+  values:
+    image:
+      repository: adguard/adguardhome
+      tag: v0.105.2
+    ingress:
+      enabled: true
+      hosts:
+        - adguard.localhost.nip.io
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+        traefik.ingress.kubernetes.io/router.tls.certresolver: default
+        traefik.frontend.host.regexp: adguard.{ip:.*}.nip.io
+    serviceTCP:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        # traefik.tcp.services.loadbalancer.server.port: 5353
+    serviceUDP:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        # traefik.udp.services.loadbalancer.server.port: 5353
