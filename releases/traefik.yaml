@@ -17,3 +17,9 @@ spec:
       repository: traefik
       tag: v2.3.7
     fullnameOverride: traefik
+    ports:
+      dns-udp:
+        port: 5353
+        expose: true
+        exposedPort: 53
+        protocol: UDP

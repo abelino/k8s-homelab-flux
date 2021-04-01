@@ -1,0 +1,30 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: adguard-home
+  namespace: adguard
+spec:
+  entryPoints:
+      - web
+      - websecure
+  routes:
+    - match: HostRegexp(`adguard.{ip:.*}.nip.io`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: adguard-home
+          port: 3000
+  tls:
+    certResolver: default
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRouteTCP
+# metadata:
+#   name: adguard-home-tcp
+# spec:
+#   entryPoints:
+#       - adguard-home-tcp
+#   routes:
+#     - match: HostSNI(`*`)
+#       services:
+#         - name: adguard-home-tcp
+#           port: 53
