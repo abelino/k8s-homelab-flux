@@ -1,0 +1,29 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: heimdall
+  namespace: heimdall
+  annotations:
+    fluxcd.io/automated: "false"
+    # filter.fluxcd.io/chart-image: semver:2.2.1
+spec:
+  releaseName: heimdall
+  chart:
+    git: https://github.com/k8s-at-home/charts
+    path: charts/stable/heimdall
+    ref: heimdall-6.1.1
+  values:
+    image:
+      repository: linuxserver/heimdall
+      tag: development-version-61a5a1a8
+    process:
+      uid: "1000"
+      gid: "1000"
+    probes:
+      startup:
+        spec:
+          initialDelaySeconds: 300
+          timeoutSeconds: 1
+          periodSeconds: 5
+          failureThreshold: 30
