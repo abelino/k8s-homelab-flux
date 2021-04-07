@@ -1,0 +1,18 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: organizr
+  namespace: organizr
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  releaseName: organizr
+  chart:
+    git: https://github.com/k8s-at-home/charts
+    path: charts/stable/organizr
+    ref: organizr-5.1.1
+  values:
+    image:
+      repository: organizr/organizr
+      tag: latest
