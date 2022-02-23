@@ -29,7 +29,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: wireguard-pia
-          image: thrnz/docker-wireguard-pia:latest
+          image: thrnz/docker-wireguard-pia:amd64
           imagePullPolicy: IfNotPresent
           stdin: true
           tty: true
